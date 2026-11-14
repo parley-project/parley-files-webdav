@@ -1,0 +1,98 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!-- License, developer, SCM, URL, Java level and the Maven Central release profile
+	     all come from parley-parent. -->
+	<parent>
+		<groupId>us.bringardner.parley</groupId>
+		<artifactId>parley-parent</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+		<relativePath>../parley-parent/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>parley-files-webdav</artifactId>
+	<name>Parley Files WebDAV</name>
+	<description>A parley-files FileSource implementation for WebDAV servers (RFC 4918), over HTTP and HTTPS,
+		on the JDK's own HTTP client (no third-party libraries). Found at runtime through ServiceLoader.</description>
+
+	<properties>
+		<!-- Written to the jar manifest as Automatic-Module-Name -->
+		<parley.moduleName>us.bringardner.parley.files.webdav</parley.moduleName>
+		<junit.version>5.11.4</junit.version>
+		<!-- The WebDAV test server: Tomcat's WebdavServlet (Tomcat 10.1 runs on Java 11), as parley-files-vfs's tests use -->
+		<tomcat.version>10.1.34</tomcat.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<!-- Attaches the -sources.jar. The version comes from parley-parent; package (not deploy)
+			     so the source jar is attached BEFORE the deploy plugin runs. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- GitHub Packages. Maven Central releases use: mvn -Prelease clean deploy -->
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>parley-project</name>
+			<url>https://maven.pkg.github.com/parley-project/parley-files-webdav</url>
+		</repository>
+	</distributionManagement>
+
+	<dependencies>
+		<!-- The FileSource API this implements. HTTP is the JDK's java.net.http client and XML the
+		     JDK's parser: nothing else is needed. -->
+		<dependency>
+			<groupId>us.bringardner.parley</groupId>
+			<artifactId>parley-files</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- The shared FileSource test suite -->
+		<dependency>
+			<groupId>us.bringardner.parley</groupId>
+			<artifactId>parley-files</artifactId>
+			<version>${project.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- The WebDAV server the tests start -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>${tomcat.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
