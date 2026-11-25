@@ -87,7 +87,7 @@ public class WebDavConnectTest {
 
 	private WebDavFileSourceFactory factory(WebDavTestServer s, Properties change) {
 		WebDavFileSourceFactory f = new WebDavFileSourceFactory();
-		f.setLogLevel(LogLevel.NONE);
+		f.getLogger().setLevel(LogLevel.NONE);
 		Properties p = s.properties();
 		p.putAll(change);
 		f.setConnectionProperties(p);
@@ -130,7 +130,7 @@ public class WebDavConnectTest {
 		p.remove(WebDavFileSourceFactory.PROP_USER);
 		p.remove(WebDavFileSourceFactory.PROP_PSWD);
 		WebDavFileSourceFactory f = new WebDavFileSourceFactory();
-		f.setLogLevel(LogLevel.NONE);
+		f.getLogger().setLevel(LogLevel.NONE);
 		f.setConnectionProperties(p);
 		made.add(f);
 		WebDavException e = assertThrows(WebDavException.class, f::connect);

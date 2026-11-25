@@ -229,7 +229,7 @@ final class WebDavTestServer implements TestServerController {
 	/** A new factory of the server's type, with its properties, not yet connected. */
 	WebDavFileSourceFactory factory() {
 		WebDavFileSourceFactory f = keyStore == null ? new WebDavFileSourceFactory() : new WebDavsFileSourceFactory();
-		f.setLogLevel(LogLevel.ERROR);
+		f.getLogger().setLevel(LogLevel.ERROR);
 		f.setConnectionProperties(properties());
 		return f;
 	}

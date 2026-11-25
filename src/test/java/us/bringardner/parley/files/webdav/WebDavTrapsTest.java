@@ -341,7 +341,7 @@ public class WebDavTrapsTest {
 	@Test
 	void anUploadLeftOpenDoesntHoldUpDisconnect() throws IOException {
 		WebDavFileSourceFactory f = server.connect();
-		f.setLogLevel(us.bringardner.parley.core.LogLevel.NONE);
+		f.getLogger().setLevel(us.bringardner.parley.core.LogLevel.NONE);
 		OutputStream leaked = f.createFileSource("/leaked.txt").getOutputStream();
 		leaked.write("never closed".getBytes(StandardCharsets.UTF_8));
 		long start = System.currentTimeMillis();

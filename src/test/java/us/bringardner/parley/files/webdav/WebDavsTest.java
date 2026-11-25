@@ -140,7 +140,7 @@ public class WebDavsTest {
 
 	private WebDavsFileSourceFactory factory(String host) {
 		WebDavsFileSourceFactory f = new WebDavsFileSourceFactory();
-		f.setLogLevel(LogLevel.NONE);
+		f.getLogger().setLevel(LogLevel.NONE);
 		Properties p = server.properties();
 		p.setProperty(WebDavFileSourceFactory.PROP_HOST, host);
 		f.setConnectionProperties(p);
