@@ -51,7 +51,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import us.bringardner.parley.core.LogLevel;
 import us.bringardner.parley.core.SecureBaseObject;
 import us.bringardner.parley.files.FileSource;
 import us.bringardner.parley.files.FileSourceFactory;
@@ -140,7 +139,6 @@ public class WebDavsTest {
 
 	private WebDavsFileSourceFactory factory(String host) {
 		WebDavsFileSourceFactory f = new WebDavsFileSourceFactory();
-		f.getLogger().setLevel(LogLevel.NONE);
 		Properties p = server.properties();
 		p.setProperty(WebDavFileSourceFactory.PROP_HOST, host);
 		f.setConnectionProperties(p);

@@ -48,6 +48,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import us.bringardner.parley.files.FileSource;
+import us.bringardner.parley.logging.testing.ErrorsExpected;
 
 /**
  * What went wrong with VFS's WebDAV (To-Do 17.1) and what WebDAV servers commonly do, on Tomcat
@@ -338,10 +339,10 @@ public class WebDavTrapsTest {
 	}
 
 	/** A stream someone didn't close doesn't keep disconnect waiting, and isn't stored. */
+	@ErrorsExpected
 	@Test
 	void anUploadLeftOpenDoesntHoldUpDisconnect() throws IOException {
 		WebDavFileSourceFactory f = server.connect();
-		f.getLogger().setLevel(us.bringardner.parley.core.LogLevel.NONE);
 		OutputStream leaked = f.createFileSource("/leaked.txt").getOutputStream();
 		leaked.write("never closed".getBytes(StandardCharsets.UTF_8));
 		long start = System.currentTimeMillis();

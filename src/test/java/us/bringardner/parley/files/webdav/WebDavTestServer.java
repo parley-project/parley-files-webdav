@@ -57,7 +57,6 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import us.bringardner.parley.core.LogLevel;
 import us.bringardner.parley.files.test.FileSourceTestSupport;
 import us.bringardner.parley.files.test.TestServerController;
 
@@ -229,7 +228,6 @@ final class WebDavTestServer implements TestServerController {
 	/** A new factory of the server's type, with its properties, not yet connected. */
 	WebDavFileSourceFactory factory() {
 		WebDavFileSourceFactory f = keyStore == null ? new WebDavFileSourceFactory() : new WebDavsFileSourceFactory();
-		f.getLogger().setLevel(LogLevel.ERROR);
 		f.setConnectionProperties(properties());
 		return f;
 	}

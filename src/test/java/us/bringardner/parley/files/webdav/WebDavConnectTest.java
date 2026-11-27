@@ -44,14 +44,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import us.bringardner.parley.core.LogLevel;
 import us.bringardner.parley.files.FileSource;
 import us.bringardner.parley.files.FileSourceFactory;
+import us.bringardner.parley.logging.testing.ErrorsExpected;
 
 /**
  * Connecting: a Basic login, a refused one, the root setting (a server whose WebDAV folder isn't at
  * "/"), and settings that point at nothing.
  */
+@ErrorsExpected
 public class WebDavConnectTest {
 
 	private static WebDavTestServer server;
@@ -87,7 +88,6 @@ public class WebDavConnectTest {
 
 	private WebDavFileSourceFactory factory(WebDavTestServer s, Properties change) {
 		WebDavFileSourceFactory f = new WebDavFileSourceFactory();
-		f.getLogger().setLevel(LogLevel.NONE);
 		Properties p = s.properties();
 		p.putAll(change);
 		f.setConnectionProperties(p);
@@ -130,7 +130,6 @@ public class WebDavConnectTest {
 		p.remove(WebDavFileSourceFactory.PROP_USER);
 		p.remove(WebDavFileSourceFactory.PROP_PSWD);
 		WebDavFileSourceFactory f = new WebDavFileSourceFactory();
-		f.getLogger().setLevel(LogLevel.NONE);
 		f.setConnectionProperties(p);
 		made.add(f);
 		WebDavException e = assertThrows(WebDavException.class, f::connect);
